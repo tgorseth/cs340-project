@@ -13,4 +13,4 @@ const pool = mysql.createPool({
 });
 
 // export the db for use in the app
-module.xports.pool = pool;
+module.exports.pool = pool;
