@@ -24,6 +24,10 @@ app.get('/characters', function(req, res) {
 	res.render('characters', {pageTitle: 'Characters', flavorText: 'Information about characters created by users'});
 });
 
+app.get('/players', function(req, res) {
+	let query1 = "SELECT * FROM Players;";
+	res.render('players', {pageTitle: 'Players', flavorText: 'Information about players who use our game'});
+});
 
 app.get('/citations', function(req, res) {
 	res.render('citations', {pageTitle: 'Citations', flavorText: 'Because plagiarism bad'});
