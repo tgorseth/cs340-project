@@ -1,27 +1,38 @@
 /* app.js */
 
 /* SETUP */
+const path = require('path');
 const express = require('express'); // use express lib for the web server
 const app = express(); // create an instance of the express obj to interact with the server
-const db = require('./database/db-connector');
+const db = require('./database/db-connector'); // for db connection
+const { engine } = require('express-handlebars');
+const exphbs = require('express-handlebars'); // import handlebars
+app.engine('.hbs', engine({extname: ".hbs"})); // create an instance of the handlebars engine to process templates
+app.set('view engine', '.hbs'); // tell express to use the handlebars engine whenever encountering a*.hbs file
 PORT = 2077; // because cyberpunk
 
-/* ROUTES */
-app.get('/', function(req, res) {
-	// define queries
-	query1 = 'SELECT * FROM Sessions;';
+/* Middleware */
+app.use(express.static(path.join(__dirname, '/public')));
 
-	// Execute every query in an asynchronous manner
-	
-	// DROP TABLE...
-	db.pool.query(query1, function(err, results, fields){
-		console.log(results);
-		res.send(JSON.stringify(results));
-	});
+/* Routes */
+app.get('/', function(req, res) {
+	res.render('index', {pageTitle: 'FutureGadgetDB', flavorText: 'Database project for CS340'});
+});
+
+app.get('/characters', function(req, res) {
+	let query1 = "SELECT * FROM Characters;";
+	res.render('characters', {pageTitle: 'Characters', flavorText: 'Information about characters created by users'});
 });
 
 
-/* LISTENER */
+app.get('/citations', function(req, res) {
+	res.render('citations', {pageTitle: 'Citations', flavorText: 'Because plagiarism bad'});
+});
+
+/* Controllers */
+
+
+/* Listener */
 app.listen(PORT, function() {
 	console.log(`Express started on http://localhost:${PORT}; press Ctrl-C to terminate.`);
 });
