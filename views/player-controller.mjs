@@ -44,25 +44,6 @@ app.get('/players', (req, res) => {
 });
 
 
-// RETRIEVE by ID controller
-app.get('/players/:_id', (req, res) => {
-    players.retrieveEntryByID(req.params._id)
-    .then(entry => { 
-        if (entry !== null) {
-            console.log(`"${entry.player_id}" was retrieved, based on its ID.`);
-            res.json(entry);
-        } else {
-            res.status(404).json({ Error: 'No players were retrieved for that ID, please try again.' });
-        }         
-     })
-    .catch(error => {
-        console.log(error);
-        res.status(400).json({ Error: 'The retrieve function by ID did not work correctly. Please verify the ID and try again.' });
-    });
-
-});
-
-
 // UPDATE controller ************************************
 app.put('/players/:_id', (req, res) => {
     players.updateEntry(
